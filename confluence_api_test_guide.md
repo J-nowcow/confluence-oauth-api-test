@@ -226,35 +226,6 @@ Authorization: Bearer {access_token}
 - OAuth 토큰으로 접근 가능한 리소스 조회
 - Confluence 사이트의 실제 리소스 이름 확인 (예: "ktspace", "Confluence" 등)
 
-## 🎯 실제 사용 시나리오
-
-### 1. 문서 자동 생성
-- 프로젝트 완료 시 자동으로 회고 문서 생성
-- API를 통해 일관된 형식의 문서 작성
-
-### 2. 문서 동기화
-- 외부 시스템과 Confluence 문서 동기화
-- 정기적인 업데이트 자동화
-
-### 3. 대량 문서 처리
-- 여러 페이지를 한 번에 생성/수정
-- 템플릿 기반 문서 생성
-
-## 🚀 실제 구현 예시
-
-### Jupyter Notebook 사용
-이 가이드의 모든 과정을 단계별로 테스트할 수 있는 Jupyter Notebook이 제공됩니다:
-- OAuth 인증 과정
-- API 연결 테스트
-- 페이지 CRUD 작업
-- 오류 디버깅
-
-### 주요 특징
-- 환경변수 기반 설정 관리
-- SSL 인증서 우회 (개발 환경)
-- v2 API 전용 사용
-- 동적 페이지 ID 관리
-
 ## 📚 참고 자료
 
 - [Atlassian OAuth 2.0 가이드](https://developer.atlassian.com/cloud/oauth-2-0/)
