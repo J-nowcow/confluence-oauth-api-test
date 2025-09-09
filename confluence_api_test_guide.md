@@ -16,23 +16,31 @@
    - `write:content:confluence` - 콘텐츠 수정
    - `read:content-details:confluence` - 콘텐츠 상세 정보
    - `read:space:confluence` - 스페이스 읽기
+   - `write:space:confluence` - 스페이스 쓰기
+   - `read:content-structure:confluence` - 콘텐츠 구조 읽기
+   - `write:content-structure:confluence` - 콘텐츠 구조 쓰기
    - `read:me` - 사용자 정보
    - `offline_access` - 오프라인 접근
 
 ### 2. 환경 변수 설정
 `.env` 파일 생성:
 ```env
-# OAuth 설정
+# Confluence API 설정
 CLIENT_ID=your_client_id_here
 CLIENT_SECRET=your_client_secret_here
 ATLASSIAN_SITE=https://your-site.atlassian.net
+SPACE_KEY=YourSpaceKey
 
-# Confluence 설정
+# Confluence API 상수
 CLOUD_ID=your_cloud_id_here
 SPACE_ID=your_space_id_here
-SPACE_KEY=YourSpaceKey
 PARENT_ID=your_parent_page_id_here
+
+# 리소스 이름
+CONFLUENCE_RESOURCE_NAME=your_resource_name_here
 ```
+
+**참고**: `FOLDER_ID`는 `PARENT_ID`와 동일한 값으로 사용됩니다.
 
 ## 🔐 OAuth 2.0 인증 과정
 
@@ -188,7 +196,11 @@ https://api.atlassian.com/ex/confluence/{cloud_id}/wiki/api/v2/spaces?keys={spac
 - **410 Gone**: deprecated된 v1 API 사용
 - **해결**: ID 값 확인, v2 API 사용, 요청 데이터 구조 확인
 
-### 3. SSL 인증서 문제
+### 3. 리소스 검색 오류
+- **"Confluence 리소스를 찾을 수 없습니다"**: 리소스 이름 불일치
+- **해결**: `CONFLUENCE_RESOURCE_NAME` 환경변수 확인, 실제 리소스 이름과 일치시키기
+
+### 4. SSL 인증서 문제
 - **SSLCertVerificationError**: 인증서 검증 실패
 - **해결**: 개발 환경에서는 `verify=False` 사용
 
@@ -210,6 +222,15 @@ Authorization: Bearer {access_token}
 - Confluence 웹에서 해당 폴더/페이지 URL 확인
 - URL에서 페이지 ID 추출: `/pages/{page_id}`
 
+### 4. 폴더 ID 찾기
+- Confluence 웹에서 폴더 URL 확인
+- URL에서 폴더 ID 추출: `/folder/{folder_id}`
+- **참고**: 폴더 ID는 `PARENT_ID`와 동일한 값으로 사용됩니다
+
+### 5. 리소스 이름 확인
+- OAuth 토큰으로 접근 가능한 리소스 조회
+- Confluence 사이트의 실제 리소스 이름 확인 (예: "ktspace", "Confluence" 등)
+
 ## 🎯 실제 사용 시나리오
 
 ### 1. 문서 자동 생성
@@ -224,8 +245,24 @@ Authorization: Bearer {access_token}
 - 여러 페이지를 한 번에 생성/수정
 - 템플릿 기반 문서 생성
 
+## 🚀 실제 구현 예시
+
+### Jupyter Notebook 사용
+이 가이드의 모든 과정을 단계별로 테스트할 수 있는 Jupyter Notebook이 제공됩니다:
+- OAuth 인증 과정
+- API 연결 테스트
+- 페이지 CRUD 작업
+- 오류 디버깅
+
+### 주요 특징
+- 환경변수 기반 설정 관리
+- SSL 인증서 우회 (개발 환경)
+- v2 API 전용 사용
+- 동적 페이지 ID 관리
+
 ## 📚 참고 자료
 
 - [Atlassian OAuth 2.0 가이드](https://developer.atlassian.com/cloud/oauth-2-0/)
 - [Confluence REST API v2 문서](https://developer.atlassian.com/cloud/confluence/rest/v2/)
 - [Confluence API 스코프 가이드](https://developer.atlassian.com/cloud/confluence/scopes/)
+- [Atlassian Console](https://developer.atlassian.com/console/myapps/)
