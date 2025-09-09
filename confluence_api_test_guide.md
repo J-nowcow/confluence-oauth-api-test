@@ -20,7 +20,6 @@
    - `read:content-structure:confluence` - 콘텐츠 구조 읽기
    - `write:content-structure:confluence` - 콘텐츠 구조 쓰기
    - `read:me` - 사용자 정보
-   - `offline_access` - 오프라인 접근
 
 ### 2. 환경 변수 설정
 `.env` 파일 생성:
