@@ -40,7 +40,6 @@ PARENT_ID=your_parent_page_id_here
 CONFLUENCE_RESOURCE_NAME=your_resource_name_here
 ```
 
-**참고**: `FOLDER_ID`는 `PARENT_ID`와 동일한 값으로 사용됩니다.
 
 ## 🔐 OAuth 2.0 인증 과정
 
@@ -136,7 +135,7 @@ https://api.atlassian.com/ex/confluence/{cloud_id}/wiki/api/v2/spaces?keys={spac
 ```
 
 **선택 파라미터**:
-- `parentId`: 부모 페이지/폴더 ID
+- `parentId`: 부모 페이지/폴더 ID (폴더 내에 페이지 생성 시 사용)
 
 ### 2. 페이지 읽기 (READ)
 **URL**: `https://api.atlassian.com/ex/confluence/{cloud_id}/wiki/api/v2/pages/{page_id}`
@@ -218,16 +217,12 @@ GET https://api.atlassian.com/ex/confluence/{cloud_id}/wiki/api/v2/spaces?keys={
 Authorization: Bearer {access_token}
 ```
 
-### 3. 부모 페이지 ID 찾기
+### 3. 부모 페이지 ID 찾기 (선택사항)
 - Confluence 웹에서 해당 폴더/페이지 URL 확인
 - URL에서 페이지 ID 추출: `/pages/{page_id}`
+- **참고**: `parentId` 파라미터로 폴더 내에 페이지 생성 가능 (선택사항)
 
-### 4. 폴더 ID 찾기
-- Confluence 웹에서 폴더 URL 확인
-- URL에서 폴더 ID 추출: `/folder/{folder_id}`
-- **참고**: 폴더 ID는 `PARENT_ID`와 동일한 값으로 사용됩니다
-
-### 5. 리소스 이름 확인
+### 4. 리소스 이름 확인
 - OAuth 토큰으로 접근 가능한 리소스 조회
 - Confluence 사이트의 실제 리소스 이름 확인 (예: "ktspace", "Confluence" 등)
 
